@@ -309,7 +309,7 @@ const Chat = () => {
                       fontSize: '0.6875rem', 
                       mt: 1, 
                       textAlign: 'right',
-                      color: msg.sender === 'user' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.5)',
+                      color: '#fff',
                     }}
                   >
                     {formatTime(msg.timestamp)}
