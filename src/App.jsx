@@ -9,18 +9,18 @@ import Box from '@mui/material/Box';
 
 function App() {
   return (
-    <Container maxWidth="sm" sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Paper elevation={8} sx={{ width: '100%', borderRadius: 4, p: { xs: 2, sm: 4 }, minHeight: 540, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', bgcolor: 'rgb(19, 32, 45)' }}>
-        <Box textAlign="center" mb={3} mt={2}>
-          <Box mb={1}>
-  <img src="/image.png" alt="Flight Icon" style={{ width: 56, height: 56 }} />
-</Box>
-          <Typography variant="h4" fontWeight={700} sx={{ color: '#f5f5f5' }} gutterBottom>
-            Flight Assistance App
-          </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
-            Your personal travel companion
-          </Typography>
+    <Container maxWidth="md" sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Paper elevation={8} sx={{ width: '100%', maxWidth: 900, minWidth: 600, borderRadius: 4, p: { xs: 3, sm: 4, md: 5 }, minHeight: 600, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', bgcolor: 'rgb(19, 32, 45)' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, mb: 3, mt: 2, width: '100%' }}>
+          <img src="/image.png" alt="Flight Icon" style={{ width: 160, height: 160 }} />
+          <Box textAlign="center">
+            <Typography variant="h4" fontWeight={700} sx={{ color: '#f5f5f5' }} gutterBottom>
+              Flight Assistance App
+            </Typography>
+            <Typography variant="subtitle1" color="text.secondary">
+              Your personal travel companion
+            </Typography>
+          </Box>
         </Box>
         <Chat />
       </Paper>
