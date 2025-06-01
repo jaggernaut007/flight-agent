@@ -1,0 +1,15 @@
+# Dockerfile for Frontend (Vite + React)
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm install --frozen-lockfile || npm install
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine AS production
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY package.json package-lock.json* ./
+RUN npm install --omit=dev --frozen-lockfile || npm install --omit=dev
+EXPOSE 4173
+CMD ["npx", "vite", "preview", "--host"]

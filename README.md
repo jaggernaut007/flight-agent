@@ -76,6 +76,132 @@ A comprehensive flight assistance application that helps users find and book fli
 
 ## Running the Application
 
+### Development Mode
+
+1. **Start the backend server**:
+   ```bash
+   cd backend
+   python -m uvicorn main:app --reload
+   ```
+
+2. **Start the frontend development server**:
+   ```bash
+   npm run dev
+   ```
+
+3. Open your browser and navigate to `http://localhost:5173`
+
+## Docker Setup & Deployment
+
+This project includes Docker configuration for easy deployment and development. You can run the entire application stack using Docker Compose.
+
+### Prerequisites
+
+- Docker Engine (v20.10+)
+- Docker Compose (v2.0+)
+
+### Quick Start
+
+1. **Clone the repository** (if you haven't already):
+   ```bash
+   git clone <repository-url>
+   cd flight-assistance
+   ```
+
+2. **Set up environment variables**:
+   - Copy `.env.example` to `.env` in both root and backend directories
+   - Update the variables with your configuration
+
+3. **Build and start the containers**:
+   ```bash
+   docker-compose up --build
+   ```
+   
+   This will:
+   - Build the frontend and backend images
+   - Start both services
+   - Make the application available at `http://localhost:4173`
+
+### Available Services
+
+- **Frontend**: `http://localhost:4173`
+- **Backend API**: `http://localhost:8000`
+- **API Documentation**: `http://localhost:8000/docs`
+
+### Managing the Services
+
+- **Start services in detached mode**:
+  ```bash
+  docker-compose up -d
+  ```
+
+- **View logs**:
+  ```bash
+  # All services
+  docker-compose logs -f
+  
+  # Specific service
+  docker-compose logs -f frontend
+  docker-compose logs -f backend
+  ```
+
+- **Stop services**:
+  ```bash
+  docker-compose down
+  ```
+
+### Building for Production
+
+1. **Build the production images**:
+   ```bash
+   docker-compose -f docker-compose.prod.yml build
+   ```
+
+2. **Start the production stack**:
+   ```bash
+   docker-compose -f docker-compose.prod.yml up -d
+   ```
+
+### Pushing to Docker Hub
+
+To push the images to Docker Hub:
+
+1. **Login to Docker Hub**:
+   ```bash
+   docker login
+   ```
+
+2. **Tag and push the backend image**:
+   ```bash
+   docker tag flight-assistance-backend:latest yourusername/flight-assistant-backend:latest
+   docker push yourusername/flight-assistant-backend:latest
+   ```
+
+3. **Tag and push the frontend image**:
+   ```bash
+   docker tag flight-assistance-frontend:latest yourusername/flight-assistant-frontend:latest
+   docker push yourusername/flight-assistant-frontend:latest
+   ```
+
+### Environment Variables
+
+#### Backend
+- `PORT`: Port to run the backend server (default: 8000)
+- `ENVIRONMENT`: Runtime environment (development/production)
+- `DATABASE_URL`: Database connection string
+- `SECRET_KEY`: Secret key for authentication
+
+#### Frontend
+- `VITE_API_URL`: Backend API URL (default: http://localhost:8000)
+
+### Troubleshooting
+
+- **Port conflicts**: Ensure ports 8000 and 4173 are available or update them in `docker-compose.yml`
+- **Build failures**: Check the logs with `docker-compose logs -f`
+- **Environment variables**: Verify all required variables are set in `.env` files
+
+For production deployments, consider using a reverse proxy like Nginx and setting up SSL certificates with Let's Encrypt.
+
 ### Start the Backend Server
 
 1. Navigate to the backend directory:
