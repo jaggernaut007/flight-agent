@@ -91,9 +91,9 @@ A comprehensive flight assistance application that helps users find and book fli
 
 3. Open your browser and navigate to `http://localhost:5173`
 
-## Docker Setup & Deployment
+## Docker Development Setup
 
-This project includes Docker configuration for easy deployment and development. You can run the entire application stack using Docker Compose.
+This project includes Docker configuration for local development. You can run the entire application stack using Docker Compose.
 
 ### Prerequisites
 
@@ -148,88 +148,6 @@ This project includes Docker configuration for easy deployment and development. 
 - **Stop services**:
   ```bash
   docker-compose down
-  ```
-
-### Building for Production
-
-This project includes a production-ready Docker setup with optimized configurations for both frontend and backend services.
-
-#### Production Stack Overview
-
-- **Frontend**: Served via Nginx with gzip compression and caching
-- **Backend**: Python 3.11 with Uvicorn
-- **Networking**: Dedicated bridge network for secure inter-service communication
-- **Optimizations**: Multi-stage builds, proper layer caching, and security headers
-
-#### Production Files
-
-- `docker-compose.prod.yml` - Production Docker Compose configuration
-- `Dockerfile.frontend.prod` - Optimized frontend Dockerfile
-- `backend/Dockerfile.prod` - Optimized backend Dockerfile
-- `nginx.conf` - Nginx configuration with security headers and caching
-
-#### Building and Running
-
-1. **Build the production images**:
-   ```bash
-   docker-compose -f docker-compose.prod.yml build
-   ```
-
-2. **Start the production stack**:
-   ```bash
-   docker-compose -f docker-compose.prod.yml up -d
-   ```
-
-3. **Verify the services are running**:
-   ```bash
-   docker-compose -f docker-compose.prod.yml ps
-   ```
-
-#### Accessing the Application
-
-- **Frontend**: http://localhost
-- **Backend API**: http://localhost:8000
-- **API Documentation**: http://localhost:8000/docs
-
-#### Production Features
-
-- **Performance**:
-  - Gzip compression for all responses
-  - Static file caching with proper cache headers
-  - Optimized Nginx configuration
-
-- **Security**:
-  - Security headers (CSP, XSS Protection, etc.)
-  - Minimal base images
-  - Non-root user execution
-  - Health checks for both services
-
-- **Reliability**:
-  - Automatic restarts on failure
-  - Resource constraints
-  - Dedicated network for service communication
-
-#### Monitoring and Maintenance
-
-- **View logs**:
-  ```bash
-  # All services
-  docker-compose -f docker-compose.prod.yml logs -f
-  
-  # Specific service
-  docker-compose -f docker-compose.prod.yml logs -f frontend
-  docker-compose -f docker-compose.prod.yml logs -f backend
-  ```
-
-- **Stop the services**:
-  ```bash
-  docker-compose -f docker-compose.prod.yml down
-  ```
-
-- **Update the services**:
-  ```bash
-  docker-compose -f docker-compose.prod.yml pull
-  docker-compose -f docker-compose.prod.yml up -d --build
   ```
 
 ### Pushing to Docker Hub
