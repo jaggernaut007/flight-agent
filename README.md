@@ -150,6 +150,27 @@ This project includes Docker configuration for local development. You can run th
   docker-compose down
   ```
 
+## Environment Setup
+
+### Setting Up Environment Variables
+
+1. Create a `.env` file in the `backend` directory:
+   ```bash
+   cd backend
+   touch .env
+   ```
+
+2. Add the following environment variables to the `.env` file:
+   ```
+   DEEPSEEK_API_KEY=your_deepseek_api_key_here
+   ```
+
+   Replace `your_deepseek_api_key_here` with your actual DeepSeek API key.
+
+3. Make sure the `.env` file is in your `.gitignore` to prevent committing sensitive information.
+
+## Deployment
+
 ### Pushing to Docker Hub
 
 To push the images to Docker Hub:
