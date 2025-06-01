@@ -1,0 +1,432 @@
+{
+  "vacations": [
+    {
+      "id": "VAC001",
+      "name": "London City Break",
+      "destination": {
+        "city": "London",
+        "country": "United Kingdom",
+        "description": "Experience the historic charm and modern attractions of London"
+      },
+      "duration": {
+        "days": 5,
+        "nights": 4
+      },
+      "package": {
+        "flights": {
+          "outbound": {
+            "flightId": "FL001",
+            "airline": "Airline X",
+            "flightNumber": "AX100",
+            "departure": {
+              "airport": "JFK",
+              "city": "New York",
+              "date": "2025-06-05T10:00:00",
+              "gate": "A12"
+            },
+            "arrival": {
+              "airport": "LHR",
+              "city": "London",
+              "date": "2025-06-05T22:00:00",
+              "gate": "B23"
+            },
+            "duration": "7h 00m",
+            "class": "Economy"
+          },
+          "return": {
+            "flightId": "FL002",
+            "airline": "Airline X",
+            "flightNumber": "AX101",
+            "departure": {
+              "airport": "LHR",
+              "city": "London",
+              "date": "2025-06-09T14:00:00",
+              "gate": "C15"
+            },
+            "arrival": {
+              "airport": "JFK",
+              "city": "New York",
+              "date": "2025-06-09T17:00:00",
+              "gate": "D18"
+            },
+            "duration": "7h 00m",
+            "class": "Economy"
+          }
+        },
+        "hotel": {
+          "hotelId": "HOT001",
+          "name": "Grand Luxe Hotel",
+          "checkIn": "2025-06-05T15:00:00",
+          "checkOut": "2025-06-09T11:00:00",
+          "roomType": "Deluxe",
+          "amenities": ["King Bed", "Mini Bar", "Flat Screen TV", "Balcony"]
+        }
+      },
+      "itinerary": [
+        {
+          "day": 1,
+          "activities": [
+            "Check-in at Grand Luxe Hotel",
+            "Visit Buckingham Palace",
+            "Evening at Covent Garden"
+          ]
+        },
+        {
+          "day": 2,
+          "activities": [
+            "Tower of London",
+            "Thames River Cruise",
+            "British Museum"
+          ]
+        },
+        {
+          "day": 3,
+          "activities": [
+            "Westminster Abbey",
+            "London Eye",
+            "Shopping in Oxford Street"
+          ]
+        },
+        {
+          "day": 4,
+          "activities": [
+            "Free day for shopping",
+            "Evening show at West End"
+          ]
+        }
+      ],
+      "price": {
+        "perPerson": 1200,
+        "currency": "USD",
+        "includes": [
+          "Round trip flights",
+          "4 nights hotel stay",
+          "Daily breakfast",
+          "Airport transfers",
+          "City tour"
+        ],
+        "excludes": [
+          "Meals other than breakfast",
+          "Personal expenses",
+          "Optional tours"
+        ]
+      },
+      "availability": {
+        "minTravelers": 2,
+        "maxTravelers": 4,
+        "booked": 0
+      },
+      "policies": {
+        "cancellation": "Free up to 48 hours before departure",
+        "payment": "50% deposit required at booking",
+        "children": "Children under 12 stay free"
+      },
+      "highlights": [
+        "Luxury hotel in city center",
+        "Comprehensive itinerary",
+        "Round trip flights included",
+        "Daily breakfast"
+      ]
+    },
+    {
+      "id": "VAC002",
+      "name": "Miami Beach Getaway",
+      "destination": {
+        "city": "Miami",
+        "country": "United States",
+        "description": "Relax and play in the sun at Miami's famous beaches"
+      },
+      "duration": {
+        "days": 7,
+        "nights": 6
+      },
+      "package": {
+        "flights": {
+          "outbound": {
+            "flightId": "FL003",
+            "airline": "Airline Y",
+            "flightNumber": "AY200",
+            "departure": {
+              "airport": "LHR",
+              "city": "London",
+              "date": "2025-07-01T14:00:00",
+              "gate": "E22"
+            },
+            "arrival": {
+              "airport": "MIA",
+              "city": "Miami",
+              "date": "2025-07-01T18:00:00",
+              "gate": "F10"
+            },
+            "duration": "9h 00m",
+            "class": "Premium Economy"
+          },
+          "return": {
+            "flightId": "FL004",
+            "airline": "Airline Y",
+            "flightNumber": "AY201",
+            "departure": {
+              "airport": "MIA",
+              "city": "Miami",
+              "date": "2025-07-07T10:00:00",
+              "gate": "G15"
+            },
+            "arrival": {
+              "airport": "LHR",
+              "city": "London",
+              "date": "2025-07-08T04:00:00",
+              "gate": "H18"
+            },
+            "duration": "9h 00m",
+            "class": "Premium Economy"
+          }
+        },
+        "hotel": {
+          "hotelId": "HOT002",
+          "name": "Seaside Paradise Resort",
+          "checkIn": "2025-07-01T16:00:00",
+          "checkOut": "2025-07-07T11:00:00",
+          "roomType": "Ocean Front",
+          "amenities": ["King Bed", "Mini Bar", "Flat Screen TV", "Balcony"]
+        }
+      },
+      "itinerary": [
+        {
+          "day": 1,
+          "activities": [
+            "Check-in at Seaside Paradise Resort",
+            "Welcome dinner at hotel restaurant",
+            "Beach relaxation"
+          ]
+        },
+        {
+          "day": 2,
+          "activities": [
+            "Miami Beach tour",
+            "Art Deco Historic District",
+            "Evening at Ocean Drive"
+          ]
+        },
+        {
+          "day": 3,
+          "activities": [
+            "Full day at beach",
+            "Water sports activities",
+            "Sunset cruise"
+          ]
+        },
+        {
+          "day": 4,
+          "activities": [
+            "Everglades National Park tour",
+            "Airboat ride",
+            "Wildlife viewing"
+          ]
+        },
+        {
+          "day": 5,
+          "activities": [
+            "Free day for relaxation",
+            "Spa treatments",
+            "Beach volleyball"
+          ]
+        },
+        {
+          "day": 6,
+          "activities": [
+            "Miami city tour",
+            "Shopping in Wynwood",
+            "Farewell dinner"
+          ]
+        }
+      ],
+      "price": {
+        "perPerson": 1800,
+        "currency": "USD",
+        "includes": [
+          "Round trip flights",
+          "6 nights hotel stay",
+          "Daily breakfast",
+          "Airport transfers",
+          "Selected tours",
+          "Water sports equipment"
+        ],
+        "excludes": [
+          "Meals other than breakfast",
+          "Personal expenses",
+          "Optional tours"
+        ]
+      },
+      "availability": {
+        "minTravelers": 2,
+        "maxTravelers": 6,
+        "booked": 0
+      },
+      "policies": {
+        "cancellation": "Free up to 72 hours before departure",
+        "payment": "30% deposit required at booking",
+        "children": "Children under 12 stay free"
+      },
+      "highlights": [
+        "Beachfront accommodation",
+        "All-inclusive activities",
+        "Luxury resort amenities",
+        "Comprehensive itinerary"
+      ]
+    },
+    {
+      "id": "VAC003",
+      "name": "Swiss Alps Adventure",
+      "destination": {
+        "city": "Zermatt",
+        "country": "Switzerland",
+        "description": "Experience the beauty of the Swiss Alps and Matterhorn"
+      },
+      "duration": {
+        "days": 8,
+        "nights": 7
+      },
+      "package": {
+        "flights": {
+          "outbound": {
+            "flightId": "FL005",
+            "airline": "Airline Z",
+            "flightNumber": "AZ300",
+            "departure": {
+              "airport": "CDG",
+              "city": "Paris",
+              "date": "2025-08-01T12:00:00",
+              "gate": "A15"
+            },
+            "arrival": {
+              "airport": "ZRH",
+              "city": "Zurich",
+              "date": "2025-08-01T13:30:00",
+              "gate": "B20"
+            },
+            "duration": "1h 30m",
+            "class": "Business"
+          },
+          "return": {
+            "flightId": "FL006",
+            "airline": "Airline Z",
+            "flightNumber": "AZ301",
+            "departure": {
+              "airport": "ZRH",
+              "city": "Zurich",
+              "date": "2025-08-08T15:00:00",
+              "gate": "C18"
+            },
+            "arrival": {
+              "airport": "CDG",
+              "city": "Paris",
+              "date": "2025-08-08T16:30:00",
+              "gate": "D23"
+            },
+            "duration": "1h 30m",
+            "class": "Business"
+          }
+        },
+        "hotel": {
+          "hotelId": "HOT003",
+          "name": "Mountain View Lodge",
+          "checkIn": "2025-08-01T15:00:00",
+          "checkOut": "2025-08-08T11:00:00",
+          "roomType": "Ski Suite",
+          "amenities": ["King Bed", "Mini Bar", "Flat Screen TV", "Balcony", "Ski Storage"]
+        }
+      },
+      "itinerary": [
+        {
+          "day": 1,
+          "activities": [
+            "Check-in at Mountain View Lodge",
+            "Welcome dinner with local specialties",
+            "Orientation tour"
+          ]
+        },
+        {
+          "day": 2,
+          "activities": [
+            "Skiing lessons",
+            "Matterhorn glacier tour",
+            "Mountain spa"
+          ]
+        },
+        {
+          "day": 3,
+          "activities": [
+            "Full day skiing",
+            "Ski lift passes included",
+            "Avalanche safety course"
+          ]
+        },
+        {
+          "day": 4,
+          "activities": [
+            "Hiking in Gorner Glacier",
+            "Mountain photography workshop",
+            "Alpine dinner"
+          ]
+        },
+        {
+          "day": 5,
+          "activities": [
+            "Free day for skiing",
+            "Ski equipment rental",
+            "Snowboarding lessons"
+          ]
+        },
+        {
+          "day": 6,
+          "activities": [
+            "Zermatt village tour",
+            "Traditional Swiss music evening",
+            "Fondue dinner"
+          ]
+        },
+        {
+          "day": 7,
+          "activities": [
+            "Helicopter tour of Matterhorn",
+            "Mountain photography session",
+            "Farewell dinner"
+          ]
+        }
+      ],
+      "price": {
+        "perPerson": 2500,
+        "currency": "CHF",
+        "includes": [
+          "Round trip flights",
+          "7 nights hotel stay",
+          "All meals",
+          "Airport transfers",
+          "Ski lift passes",
+          "Guided tours",
+          "Helicopter tour"
+        ],
+        "excludes": [
+          "Personal expenses",
+          "Optional activities"
+        ]
+      },
+      "availability": {
+        "minTravelers": 2,
+        "maxTravelers": 4,
+        "booked": 0
+      },
+      "policies": {
+        "cancellation": "Free up to 7 days before departure",
+        "payment": "50% deposit required at booking",
+        "children": "Children under 12 stay free"
+      },
+      "highlights": [
+        "Luxury ski resort",
+        "Matterhorn views",
+        "All-inclusive package",
+        "Helicopter tour"
+      ]
+    }
+  ]
+}

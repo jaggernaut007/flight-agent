@@ -1,0 +1,222 @@
+{
+  "flights": [
+    {
+      "id": "FL001",
+      "airline": "Airline X",
+      "flightNumber": "AX100",
+      "departure": {
+        "airport": "LHR",
+        "city": "London Heathrow",
+        "date": "2025-06-01T08:00:00",
+        "gate": "A12"
+      },
+      "arrival": {
+        "airport": "CDG",
+        "city": "Paris Charles de Gaulle",
+        "date": "2025-06-01T10:30:00",
+        "gate": "B23"
+      },
+      "duration": "2h 30m",
+      "price": {
+        "economy": 120,
+        "business": 350,
+        "first": 800
+      },
+      "status": "On Time",
+      "availableSeats": {
+        "economy": 50,
+        "business": 10,
+        "first": 2
+      }
+    },
+    {
+      "id": "FL002",
+      "airline": "Airline Y",
+      "flightNumber": "AY200",
+      "departure": {
+        "airport": "JFK",
+        "city": "New York JFK",
+        "date": "2025-06-02T14:00:00",
+        "gate": "C15"
+      },
+      "arrival": {
+        "airport": "LHR",
+        "city": "London Heathrow",
+        "date": "2025-06-03T03:00:00",
+        "gate": "D18"
+      },
+      "duration": "7h 00m",
+      "price": {
+        "economy": 450,
+        "business": 1200,
+        "first": 2500
+      },
+      "status": "Delayed",
+      "availableSeats": {
+        "economy": 30,
+        "business": 8,
+        "first": 3
+      }
+    },
+    {
+      "id": "FL003",
+      "airline": "Airline Z",
+      "flightNumber": "AZ300",
+      "departure": {
+        "airport": "SIN",
+        "city": "Singapore Changi",
+        "date": "2025-06-03T10:00:00",
+        "gate": "E22"
+      },
+      "arrival": {
+        "airport": "LHR",
+        "city": "London Heathrow",
+        "date": "2025-06-03T15:30:00",
+        "gate": "F10"
+      },
+      "duration": "13h 30m",
+      "price": {
+        "economy": 700,
+        "business": 2000,
+        "first": 3500
+      },
+      "status": "On Time",
+      "availableSeats": {
+        "economy": 45,
+        "business": 12,
+        "first": 4
+      }
+    },
+    {
+      "id": "FL004",
+      "airline": "Airline X",
+      "flightNumber": "AX101",
+      "departure": {
+        "airport": "LHR",
+        "city": "London Heathrow",
+        "date": "2025-06-09T14:00:00",
+        "gate": "C15"
+      },
+      "arrival": {
+        "airport": "JFK",
+        "city": "New York JFK",
+        "date": "2025-06-09T17:00:00",
+        "gate": "D18"
+      },
+      "duration": "7h 00m",
+      "price": {
+        "economy": 450,
+        "business": 1200,
+        "first": 2500
+      },
+      "status": "On Time",
+      "availableSeats": {
+        "economy": 30,
+        "business": 8,
+        "first": 3
+      }
+    },
+    {
+      "id": "FL005",
+      "airline": "Airline Y",
+      "flightNumber": "AY201",
+      "departure": {
+        "airport": "MIA",
+        "city": "Miami International",
+        "date": "2025-07-07T10:00:00",
+        "gate": "G15"
+      },
+      "arrival": {
+        "airport": "LHR",
+        "city": "London Heathrow",
+        "date": "2025-07-08T04:00:00",
+        "gate": "H18"
+      },
+      "duration": "9h 00m",
+      "price": {
+        "economy": 600,
+        "business": 1800,
+        "first": 3000
+      },
+      "status": "On Time",
+      "availableSeats": {
+        "economy": 45,
+        "business": 12,
+        "first": 4
+      }
+    },
+    {
+      "id": "FL006",
+      "airline": "Airline Z",
+      "flightNumber": "AZ301",
+      "departure": {
+        "airport": "ZRH",
+        "city": "Zurich Airport",
+        "date": "2025-08-08T15:00:00",
+        "gate": "C18"
+      },
+      "arrival": {
+        "airport": "CDG",
+        "city": "Paris Charles de Gaulle",
+        "date": "2025-08-08T16:30:00",
+        "gate": "D23"
+      },
+      "duration": "1h 30m",
+      "price": {
+        "economy": 200,
+        "business": 600,
+        "first": 1200
+      },
+      "status": "On Time",
+      "availableSeats": {
+        "economy": 50,
+        "business": 15,
+        "first": 3
+      }
+    }
+  ],
+  "airports": [
+    {
+      "code": "LHR",
+      "name": "London Heathrow Airport",
+      "city": "London",
+      "country": "United Kingdom",
+      "timezone": "Europe/London"
+    },
+    {
+      "code": "CDG",
+      "name": "Paris Charles de Gaulle Airport",
+      "city": "Paris",
+      "country": "France",
+      "timezone": "Europe/Paris"
+    },
+    {
+      "code": "JFK",
+      "name": "John F. Kennedy International Airport",
+      "city": "New York",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "code": "SIN",
+      "name": "Singapore Changi Airport",
+      "city": "Singapore",
+      "country": "Singapore",
+      "timezone": "Asia/Singapore"
+    },
+    {
+      "code": "MIA",
+      "name": "Miami International Airport",
+      "city": "Miami",
+      "country": "United States",
+      "timezone": "America/New_York"
+    },
+    {
+      "code": "ZRH",
+      "name": "Zurich Airport",
+      "city": "Zurich",
+      "country": "Switzerland",
+      "timezone": "Europe/Zurich"
+    }
+  ]
+}

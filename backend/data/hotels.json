@@ -1,0 +1,238 @@
+{
+  "hotels": [
+    {
+      "id": "HOT001",
+      "name": "Grand Luxe Hotel",
+      "address": {
+        "street": "123 Luxury Lane",
+        "city": "London",
+        "state": "Greater London",
+        "country": "United Kingdom",
+        "postalCode": "W1A 1AA",
+        "latitude": 51.5074,
+        "longitude": -0.1278
+      },
+      "starRating": 5,
+      "priceRange": {
+        "low": 200,
+        "high": 500,
+        "currency": "GBP"
+      },
+      "amenities": [
+        "Free WiFi",
+        "Swimming Pool",
+        "Spa",
+        "Fitness Center",
+        "Restaurant",
+        "24/7 Reception",
+        "Room Service",
+        "Airport Shuttle"
+      ],
+      "roomTypes": [
+        {
+          "type": "Standard",
+          "price": 200,
+          "amenities": ["King Bed", "Mini Bar", "Flat Screen TV"],
+          "availability": 20
+        },
+        {
+          "type": "Deluxe",
+          "price": 300,
+          "amenities": ["King Bed", "Mini Bar", "Flat Screen TV", "Balcony"],
+          "availability": 10
+        },
+        {
+          "type": "Suite",
+          "price": 500,
+          "amenities": ["King Bed", "Mini Bar", "Flat Screen TV", "Balcony", "Living Room"],
+          "availability": 5
+        }
+      ],
+      "location": {
+        "area": "City Center",
+        "nearbyAttractions": [
+          "Buckingham Palace",
+          "Westminster Abbey",
+          "London Eye"
+        ],
+        "transport": {
+          "nearestAirport": "London Heathrow",
+          "nearestStation": "Piccadilly Circus"
+        }
+      },
+      "reviews": {
+        "rating": 4.8,
+        "totalReviews": 1200,
+        "highlights": [
+          "Excellent location",
+          "Friendly staff",
+          "Clean rooms",
+          "Great breakfast"
+        ]
+      },
+      "policies": {
+        "checkIn": "15:00",
+        "checkOut": "12:00",
+        "cancellation": "Free up to 24 hours before check-in",
+        "pets": "Allowed with extra fee",
+        "smoking": "Non-smoking rooms available"
+      }
+    },
+    {
+      "id": "HOT002",
+      "name": "Seaside Paradise Resort",
+      "address": {
+        "street": "456 Beach Road",
+        "city": "Miami",
+        "state": "Florida",
+        "country": "United States",
+        "postalCode": "33139",
+        "latitude": 25.7617,
+        "longitude": -80.1918
+      },
+      "starRating": 4,
+      "priceRange": {
+        "low": 150,
+        "high": 350,
+        "currency": "USD"
+      },
+      "amenities": [
+        "Free WiFi",
+        "Private Beach",
+        "Multiple Restaurants",
+        "Water Sports",
+        "Kids Club",
+        "24/7 Reception",
+        "Room Service",
+        "Beach Volleyball"
+      ],
+      "roomTypes": [
+        {
+          "type": "Beach View",
+          "price": 150,
+          "amenities": ["Queen Bed", "Mini Bar", "Flat Screen TV"],
+          "availability": 30
+        },
+        {
+          "type": "Ocean Front",
+          "price": 250,
+          "amenities": ["King Bed", "Mini Bar", "Flat Screen TV", "Balcony"],
+          "availability": 20
+        },
+        {
+          "type": "Family Suite",
+          "price": 350,
+          "amenities": ["2 Queen Beds", "Mini Bar", "Flat Screen TV", "Living Area"],
+          "availability": 10
+        }
+      ],
+      "location": {
+        "area": "South Beach",
+        "nearbyAttractions": [
+          "Miami Beach Boardwalk",
+          "Ocean Drive",
+          "Art Deco Historic District"
+        ],
+        "transport": {
+          "nearestAirport": "Miami International",
+          "nearestStation": "Miami Beach"
+        }
+      },
+      "reviews": {
+        "rating": 4.5,
+        "totalReviews": 850,
+        "highlights": [
+          "Beautiful beach",
+          "Perfect for families",
+          "Great food",
+          "Excellent service"
+        ]
+      },
+      "policies": {
+        "checkIn": "16:00",
+        "checkOut": "11:00",
+        "cancellation": "Free up to 48 hours before check-in",
+        "pets": "Not allowed",
+        "smoking": "Non-smoking property"
+      }
+    },
+    {
+      "id": "HOT003",
+      "name": "Mountain View Lodge",
+      "address": {
+        "street": "789 Alpine Way",
+        "city": "Zermatt",
+        "state": "Valais",
+        "country": "Switzerland",
+        "postalCode": "3920",
+        "latitude": 46.0215,
+        "longitude": 7.7528
+      },
+      "starRating": 5,
+      "priceRange": {
+        "low": 250,
+        "high": 600,
+        "currency": "CHF"
+      },
+      "amenities": [
+        "Free WiFi",
+        "Ski-in/Ski-out",
+        "Spa",
+        "Multiple Restaurants",
+        "Ski School",
+        "Ski Storage",
+        "24/7 Reception",
+        "Room Service"
+      ],
+      "roomTypes": [
+        {
+          "type": "Mountain View",
+          "price": 250,
+          "amenities": ["Queen Bed", "Mini Bar", "Flat Screen TV"],
+          "availability": 25
+        },
+        {
+          "type": "Ski Suite",
+          "price": 400,
+          "amenities": ["King Bed", "Mini Bar", "Flat Screen TV", "Balcony", "Ski Storage"],
+          "availability": 15
+        },
+        {
+          "type": "Penthouse",
+          "price": 600,
+          "amenities": ["King Bed", "Mini Bar", "Flat Screen TV", "Balcony", "Living Room", "Fireplace"],
+          "availability": 3
+        }
+      ],
+      "location": {
+        "area": "Matterhorn Base",
+        "nearbyAttractions": [
+          "Matterhorn Mountain",
+          "Gorner Glacier",
+          "Zermatt Ski Resort"
+        ],
+        "transport": {
+          "nearestAirport": "Zermatt Train Station",
+          "nearestStation": "Zermatt"
+        }
+      },
+      "reviews": {
+        "rating": 4.9,
+        "totalReviews": 600,
+        "highlights": [
+          "Amazing views",
+          "Perfect for skiing",
+          "Luxurious rooms",
+          "Excellent cuisine"
+        ]
+      },
+      "policies": {
+        "checkIn": "15:00",
+        "checkOut": "11:00",
+        "cancellation": "Free up to 72 hours before check-in",
+        "pets": "Not allowed",
+        "smoking": "Non-smoking property"
+      }
+    }
+  ]
+}
