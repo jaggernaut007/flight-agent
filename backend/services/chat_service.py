@@ -16,15 +16,15 @@ load_dotenv()
 class ChatService:
     def __init__(self):
         load_dotenv()
-        self.api_key = os.getenv("DEEPSEEK_API_KEY") or os.getenv("OPENAI_API_KEY")
-        self.api_base = os.getenv("DEEPSEEK_API_URL") or os.getenv("OPENAI_API_URL")
+        self.api_key = os.getenv("API_KEY") 
+        self.api_base = os.getenv("API_BASE") 
         if not self.api_key:
-            raise ValueError("Neither DEEPSEEK_API_KEY nor OPENAI_API_KEY found in environment variables")
+            raise ValueError("API_KEY not found in environment variables")
         
         # Initialize the language model
         # Change model name as per requirements. DeepSeek uses deepseek-chat, OpenAI uses gpt-3.5-turbo
         self.llm = ChatOpenAI(
-            model_name="deepseek-chat",
+            model_name=os.getenv("MODEL_NAME"),
             temperature=0.7,
             max_tokens=1000,
             openai_api_key=self.api_key,
@@ -84,15 +84,13 @@ class ChatService:
         """
         try:
             # Get relevant context (flights, hotels, etc.)
-            other_context = self._rag_retrieve_context(user_message)
+            context_str = self._get_rag_context(user_message)
             
             # Build the context string for the LLM
             context_parts = []
             
             # Add other context (flights, hotels, vacations)
-            for key, items in other_context.items():
-                if items:
-                    context_parts.append(f"{key.upper()}:\n" + "\n".join(items))
+            context_parts.append(context_str)
             
             # Add any existing context from the conversation
             if context:
