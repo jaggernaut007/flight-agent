@@ -1,10 +1,13 @@
 import os
 import logging
+import datetime
 from typing import Dict, Any, Optional
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from .rag_service import RAGService
+from .serpapi_flights_service import SerpApiFlightsService
+from .flight_query_schema import FlightQuery
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -25,29 +28,134 @@ class ChatService:
         # Change model name as per requirements. DeepSeek uses deepseek-chat, OpenAI uses gpt-3.5-turbo
         self.llm = ChatOpenAI(
             model_name=os.getenv("MODEL_NAME"),
-            temperature=0.7,
+            temperature=0.0,
             max_tokens=1000,
             openai_api_key=self.api_key,
             openai_api_base=self.api_base
         )
         
         # System prompt
-        system_prompt = """You are a helpful travel assistant. You can help users with travel related queries.and information about flights, vacations and hotel bookings.
-        If there are multiple options, provide all of them. Ensure to provide information from the database only. If there are no flights, vacations or hotel bookings available, provide a message to the user.
-        Be friendly, concise, and provide helpful information.
-        """
+        system_prompt = (
+            "You are a helpful travel assistant. For ALL flight-related queries, you MUST ALWAYS provide both the departure and arrival airport IDs as three-letter IATA certified airport codes (not city names or ambiguous codes). "
+            "If a user provides a city name, you must convert it to the correct IATA code before searching or responding. "
+            "All flight dates (departure and return) must be in the future and never in the past. If the user provides a past date, ask them to provide a valid future date. "
+            "Validate all flight parameters before searching. "
+            "Respond with clear, concise, and accurate flight information. "
+            "If you cannot find a flight, apologize and explain why. "
+        )
         
-        # Initialize RAG service
+        # Initialize RAG service (inactive, but not removed)
         self.rag_service = RAGService()
-        
+
+        # Initialize SerpApi Flights service
+        self.flights_service = SerpApiFlightsService()
+
+        # Tool for LLM: search_flights
+        from langchain.tools import StructuredTool
+        def search_flights_tool(departure_id: str, arrival_id: str, departure_date: str, return_date: str = None, gl: str = None, hl: str = None, currency: str = None, type: int = None):
+            # City/airport code mapping for common cities
+            city_to_airport = {
+                # London
+                "london": "LHR", "lon": "LHR", "lhr": "LHR",
+                "gatwick": "LGW", "lgw": "LGW",
+                "city": "LCY", "lcy": "LCY",
+                # New York
+                "new york": "JFK", "nyc": "JFK", "jfk": "JFK",
+                "ewr": "EWR", "newark": "EWR",
+                "lga": "LGA", "la guardia": "LGA",
+                # Paris
+                "paris": "CDG", "cdg": "CDG",
+                # Los Angeles
+                "los angeles": "LAX", "la": "LAX", "lax": "LAX",
+                # Tokyo
+                "tokyo": "HND", "hnd": "HND", "narita": "NRT", "nrt": "NRT",
+                # Dubai
+                "dubai": "DXB", "dxb": "DXB",
+                # Mumbai
+                "mumbai": "BOM", "bom": "BOM",
+                # Delhi
+                "delhi": "DEL", "del": "DEL",
+                # Singapore
+                "singapore": "SIN", "sin": "SIN",
+                # Sydney
+                "sydney": "SYD", "syd": "SYD",
+                # Toronto
+                "toronto": "YYZ", "yyz": "YYZ",
+                # San Francisco
+                "san francisco": "SFO", "sfo": "SFO",
+                # Chicago
+                "chicago": "ORD", "ord": "ORD",
+                # Miami
+                "miami": "MIA", "mia": "MIA",
+            }
+
+            def map_to_airport(code):
+                if not code:
+                    return code
+                code_lower = code.strip().lower()
+                mapped = city_to_airport.get(code_lower, code.upper())
+                if mapped != code:
+                    logger.info(f"[search_flights_tool] Mapped '{code}' to airport code '{mapped}'")
+                return mapped
+
+            departure_id_mapped = map_to_airport(departure_id)
+            arrival_id_mapped = map_to_airport(arrival_id)
+
+            # Determine type: if not provided, default to one-way (2); if return_date is present, set to round-trip (1)
+            if type is None:
+                type_val = 1 if return_date else 2
+            else:
+                type_val = type
+            try:
+                query = FlightQuery(
+                    departure_id=departure_id_mapped,
+                    arrival_id=arrival_id_mapped,
+                    departure_date=departure_date,
+                    return_date=return_date,
+                    type=type_val,
+                    gl=gl,
+                    hl=hl,
+                    currency=currency
+                )
+            except Exception as e:
+                return {"error": f"Invalid flight search parameters: {e}"}
+            # Only pass type if not None
+            kwargs = {
+                'departure_id': query.departure_id,
+                'arrival_id': query.arrival_id,
+                'departure_date': str(query.departure_date),
+                'gl': query.gl,
+                'hl': query.hl,
+                'currency': query.currency
+            }
+            if query.return_date:
+                kwargs['return_date'] = str(query.return_date)
+            if query.type is not None:
+                kwargs['type'] = query.type
+            return self.flights_service.search_flights(**kwargs)
+
+
+        self.flight_tool = StructuredTool.from_function(
+            search_flights_tool,
+            name="search_flights",
+            description="Search for flights using departure and arrival airport codes and departure date.",
+            args_schema=FlightQuery
+        )
+
         # Create a chat prompt template
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", system_prompt),
-            ("human", "Context: {context}\n\nUser: {input}\n\nAssistant:")
+            ("human", "User: {input}\n\nToday's date: {current_date}\nUser location: {location}\nAssistant:")
         ])
-        
-        # Create a chain
-        self.chain = self.prompt | self.llm
+
+        # Tool-enabled chain (OpenAI function calling)
+        from langchain.agents import initialize_agent, AgentType
+        self.agent = initialize_agent(
+            [self.flight_tool],
+            self.llm,
+            agent=AgentType.OPENAI_FUNCTIONS,
+            verbose=True
+        )
     
     def _get_rag_context(self, user_message: str) -> str:
         """
@@ -75,51 +183,69 @@ class ChatService:
     async def process_message(self, user_message: str, context: Optional[Dict[str, Any]] = None) -> str:
         """
         Process a user message and return the assistant's response.
-        
+        The LLM will decide if a flight search is needed and call the tool if so.
         Args:
             user_message: The message from the user
             context: Optional context dictionary for the conversation
         Returns:
             str: The assistant's response
         """
+        logger.info(f"[process_message] Start processing user message: {user_message}")
         try:
-            # Get relevant context (flights, hotels, etc.)
-            context_str = self._get_rag_context(user_message)
-            
-            # Build the context string for the LLM
-            context_parts = []
-            
-            # Add other context (flights, hotels, vacations)
-            context_parts.append(context_str)
-            
-            # Add any existing context from the conversation
-            if context:
-                context_parts.append("CONVERSATION CONTEXT:" + 
-                                  "\n".join(f"- {k}: {v}" for k, v in context.items() if v))
-            
-            # Combine all context parts
-            context_str = "\n\n".join(part for part in context_parts if part)
-            
-            # Log the context for debugging
-            logger.debug(f"Context for LLM:\n{context_str}")
-            
-            # If we're in a conversation flow, maintain context
-            conversation_context = dict(context or {})
-            if 'conversation' not in conversation_context:
-                conversation_context['conversation'] = []
-            
-            # Add user message to conversation history (last 3 messages)
-            conversation_context['conversation'].append(f"User: {user_message}")
-            conversation_context['conversation'] = conversation_context['conversation'][-3:]  # Keep last 3 messages
-            # Get the response from the language model
-            response = await self.chain.ainvoke({
-                "context": context_str,
-                "input": user_message
-            })
-            # Extract the content from the AIMessage object
-            if hasattr(response, 'content'):
-                return response.content.strip()
-            return str(response).strip()
+            # Always add current date to context
+            today_str = datetime.date.today().isoformat()
+            if context is None:
+                context = {}
+            context['current_date'] = today_str
+            logger.debug(f"[process_message] Context: {context}")
+
+            # Add current date and location to context for the LLM
+            location = context.get('location') if context and 'location' in context else 'unknown'
+            response = await self.agent.arun(
+                self.prompt.format(
+                    input=user_message,
+                    current_date=today_str,
+                    location=location
+                )
+            )
+
+            # Try to parse and sort flight results if present
+            import json
+            try:
+                data = json.loads(response) if isinstance(response, str) else response
+                if isinstance(data, dict) and ('best_flights' in data or 'other_flights' in data):
+                    flights = []
+                    for section in ['best_flights', 'other_flights']:
+                        if section in data:
+                            for f in data[section]:
+                                # Defensive: skip if missing price or total_duration
+                                price = f.get('price')
+                                duration = f.get('total_duration')
+                                if price is not None and duration is not None:
+                                    flights.append(f)
+                    # Sort by weighted optimality: price + duration (normalize duration to hours)
+                    if flights:
+                        # Normalize: scale price and duration
+                        min_price = min(f['price'] for f in flights)
+                        max_price = max(f['price'] for f in flights)
+                        min_dur = min(f['total_duration'] for f in flights)
+                        max_dur = max(f['total_duration'] for f in flights)
+                        def score(f):
+                            price_score = (f['price'] - min_price) / (max_price - min_price + 1)
+                            dur_score = (f['total_duration'] - min_dur) / (max_dur - min_dur + 1)
+                            return price_score + dur_score
+                        flights.sort(key=score)
+                        data['most_optimal_flights'] = flights[:3]  # Top 3
+                        logger.info(f"[process_message] Sorted {len(flights)} flights by optimality.")
+                        return json.dumps({
+                            'most_optimal_flights': flights[:3],
+                            'note': 'Sorted by fastest + cheapest combination',
+                            'current_date': today_str
+                        }, indent=2)
+            except Exception as sort_e:
+                logger.warning(f"[process_message] Could not sort flights: {sort_e}")
+            logger.info(f"[process_message] LLM response: {response}")
+            return response
         except Exception as e:
             error_msg = f"Error in process_message: {str(e)}"
             logger.error(error_msg, exc_info=True)
