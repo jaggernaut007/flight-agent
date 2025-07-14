@@ -41,30 +41,37 @@ A comprehensive flight assistance application that helps users find and book fli
    cd backend
    ```
 
-2. Create a virtual environment (recommended):
+2. (Recommended) Create and activate a virtual environment:
    ```bash
    python -m venv venv
+   # On Windows:
+   .\venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
    ```
-   
-   - On Windows:
-     ```bash
-     .\venv\Scripts\activate
-     ```
-   - On macOS/Linux:
-     ```bash
-     source venv/bin/activate
-     ```
 
 3. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
+4. (Alternative) You can use [uv](https://github.com/astral-sh/uv) for faster dependency management and running the backend:
+   ```bash
+   # Install uv if not already installed
+   pip install uv
+   # Install dependencies (using pyproject.toml)
+   uv pip install .
+   # Run the backend (hot reload)
+   uvicorn main:app --reload
+   # Or, using uv's built-in runner (if available):
+   uv run main:app --reload
+   ```
+
 ### Frontend Setup
 
-1. Navigate to the project root directory:
+1. Navigate to the `frontend` directory:
    ```bash
-   cd ..
+   cd ../frontend
    ```
 
 2. Install Node.js dependencies:
@@ -78,15 +85,23 @@ A comprehensive flight assistance application that helps users find and book fli
 
 ### Development Mode
 
-1. **Start the backend server**:
+1. **Start the backend server** (choose one):
    ```bash
+   # Using uvicorn (default)
    cd backend
+   uvicorn main:app --reload
+   # Or using Python module
    python -m uvicorn main:app --reload
+   # Or using uv (if installed)
+   uv run main:app --reload
    ```
 
 2. **Start the frontend development server**:
    ```bash
+   cd ../frontend
    npm run dev
+   # or
+   yarn dev
    ```
 
 3. Open your browser and navigate to `http://localhost:5173`
@@ -154,20 +169,35 @@ This project includes Docker configuration for local development. You can run th
 
 ### Setting Up Environment Variables
 
-1. Create a `.env` file in the `backend` directory:
+1. Copy the example environment file and fill in your API keys:
    ```bash
    cd backend
-   touch .env
+   cp .env.example .env
+   # Then edit .env and provide your API keys
    ```
 
-2. Add the following environment variables to the `.env` file:
-   ```
-   DEEPSEEK_API_KEY=your_deepseek_api_key_here
-   ```
+2. The `.env.example` file includes the following keys:
+   ```env
+   # DeepSeek API configuration
+   # API_KEY=your-deepseek-api-key
+   # API_BASE=https://api.deepseek.com/v1/
 
-   Replace `your_deepseek_api_key_here` with your actual DeepSeek API key.
+   # OpenAI API configuration
+   API_KEY=your-openai-api-key
+   API_BASE=https://api.openai.com/v1/
+   MODEL_NAME=gpt-4o
 
-3. Make sure the `.env` file is in your `.gitignore` to prevent committing sensitive information.
+   # OpenWeather API configuration
+   OPENWEATHER_API_KEY=your-openweather-api-key
+
+   # SERPAPI configuration
+   SERPAPI_KEY=your-SERPAPI-api-key
+   ```
+   - Un-comment and fill in the DeepSeek section if you use DeepSeek.
+   - Fill in your OpenAI, OpenWeather, and SERPAPI keys as needed.
+
+3. **Security:**
+   - Ensure `.env` is listed in `.gitignore` to avoid committing secrets.
 
 ## Deployment
 

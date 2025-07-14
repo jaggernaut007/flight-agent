@@ -10,7 +10,17 @@ from .serpapi_flights_service import SerpApiFlightsService
 from .flight_query_schema import FlightQuery
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+LOG_DIR = os.path.join(os.path.dirname(__file__), 'logs')
+LOG_PATH = os.path.join(LOG_DIR, 'backend.log')
+os.makedirs(LOG_DIR, exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(name)s %(message)s',
+    handlers=[
+        logging.FileHandler(LOG_PATH),
+        logging.StreamHandler()
+    ]
+)
 logger = logging.getLogger(__name__)
 
 # Load environment variables
@@ -21,18 +31,23 @@ class ChatService:
         load_dotenv()
         self.api_key = os.getenv("API_KEY") 
         self.api_base = os.getenv("API_BASE") 
+        self.model_name = os.getenv("MODEL_NAME")
+        logger.info(f"Initializing ChatService with model: {self.model_name}, API base: {self.api_base}")
         if not self.api_key:
+            logger.error("API_KEY not found in environment variables")
             raise ValueError("API_KEY not found in environment variables")
-        
+        if not self.model_name:
+            logger.error("MODEL_NAME not found in environment variables")
+            raise ValueError("MODEL_NAME not found in environment variables")
         # Initialize the language model
-        # Change model name as per requirements. DeepSeek uses deepseek-chat, OpenAI uses gpt-3.5-turbo
         self.llm = ChatOpenAI(
-            model_name=os.getenv("MODEL_NAME"),
+            model_name=self.model_name,
             temperature=0.0,
             max_tokens=1000,
             openai_api_key=self.api_key,
             openai_api_base=self.api_base
         )
+        logger.info("ChatOpenAI LLM initialized successfully.")
         
         # System prompt
         system_prompt = (
@@ -181,26 +196,15 @@ class ChatService:
             
 
     async def process_message(self, user_message: str, context: Optional[Dict[str, Any]] = None) -> str:
-        """
-        Process a user message and return the assistant's response.
-        The LLM will decide if a flight search is needed and call the tool if so.
-        Args:
-            user_message: The message from the user
-            context: Optional context dictionary for the conversation
-        Returns:
-            str: The assistant's response
-        """
         logger.info(f"[process_message] Start processing user message: {user_message}")
         try:
-            # Always add current date to context
             today_str = datetime.date.today().isoformat()
             if context is None:
                 context = {}
             context['current_date'] = today_str
             logger.debug(f"[process_message] Context: {context}")
-
-            # Add current date and location to context for the LLM
             location = context.get('location') if context and 'location' in context else 'unknown'
+            logger.info(f"[process_message] Calling agent with prompt. Location: {location}")
             response = await self.agent.arun(
                 self.prompt.format(
                     input=user_message,
@@ -208,7 +212,7 @@ class ChatService:
                     location=location
                 )
             )
-
+            logger.info(f"[process_message] LLM response: {response}")
             # Try to parse and sort flight results if present
             import json
             try:

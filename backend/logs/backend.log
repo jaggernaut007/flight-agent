@@ -1,0 +1,16 @@
+2025-07-14 10:16:46,549 INFO services.chat_service Initializing ChatService with model: gpt-4o, API base: None
+2025-07-14 10:16:46,697 INFO services.chat_service ChatOpenAI LLM initialized successfully.
+2025-07-14 10:16:54,017 INFO services.chat_service Initializing ChatService with model: gpt-4o, API base: None
+2025-07-14 10:16:54,167 INFO services.chat_service ChatOpenAI LLM initialized successfully.
+2025-07-14 10:17:03,271 INFO main Received chat message: Hello
+2025-07-14 10:17:03,272 INFO services.chat_service [process_message] Start processing user message: Hello
+2025-07-14 10:17:03,272 INFO services.chat_service [process_message] Calling agent with prompt. Location: unknown
+2025-07-14 10:17:04,888 INFO httpx HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-14 10:17:04,903 INFO services.chat_service [process_message] LLM response: Hello! How can I assist you with your travel plans today? If you're looking for flights, please provide the departure and arrival airport codes along with your travel dates.
+2025-07-14 10:17:04,903 WARNING services.chat_service [process_message] Could not sort flights: Expecting value: line 1 column 1 (char 0)
+2025-07-14 10:17:04,903 INFO services.chat_service [process_message] LLM response: Hello! How can I assist you with your travel plans today? If you're looking for flights, please provide the departure and arrival airport codes along with your travel dates.
+2025-07-14 10:17:04,903 INFO main Successfully generated response
+2025-07-14 10:17:14,727 INFO services.chat_service Initializing ChatService with model: gpt-4o, API base: None
+2025-07-14 10:17:14,904 INFO services.chat_service ChatOpenAI LLM initialized successfully.
+2025-07-14 10:17:50,029 INFO services.chat_service Initializing ChatService with model: gpt-4o, API base: None
+2025-07-14 10:17:50,206 INFO services.chat_service ChatOpenAI LLM initialized successfully.

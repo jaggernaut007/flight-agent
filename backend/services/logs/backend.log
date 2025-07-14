@@ -1,0 +1,2 @@
+2025-07-14 10:16:39,499 INFO services.chat_service Initializing ChatService with model: gpt-4o, API base: None
+2025-07-14 10:16:39,653 INFO services.chat_service ChatOpenAI LLM initialized successfully.

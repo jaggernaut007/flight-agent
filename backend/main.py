@@ -7,6 +7,19 @@ import logging
 import traceback
 import os
 
+LOG_DIR = os.path.join(os.path.dirname(__file__), 'logs')
+LOG_PATH = os.path.join(LOG_DIR, 'backend.log')
+os.makedirs(LOG_DIR, exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(name)s %(message)s',
+    handlers=[
+        logging.FileHandler(LOG_PATH),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
 # Import the chat service
 from services.chat_service import chat_service
 
@@ -21,10 +34,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 # Chat Models
 class ChatMessage(BaseModel):
@@ -59,19 +68,18 @@ async def chat_endpoint(chat_message: ChatMessage):
     """
     try:
         logger.info(f"Received chat message: {chat_message.message}")
-        
+        logger.debug(f"Chat context: {chat_message.context}")
         # Process the message using our chat service
         response = await chat_service.process_message(
             user_message=chat_message.message,
             context=chat_message.context or {}
         )
-        
         logger.info("Successfully generated response")
+        logger.debug(f"Response content: {response}")
         return ChatResponse(
             response=response,
             context=chat_message.context or {}
         )
-        
     except Exception as e:
         logger.error(f"Error processing chat message: {str(e)}\n{traceback.format_exc()}")
         raise HTTPException(
